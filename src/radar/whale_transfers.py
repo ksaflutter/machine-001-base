@@ -54,6 +54,9 @@ def init_db():
             wallet TEXT,
             net_tokens REAL,
             net_usd REAL,
+            price_usd_at_detection REAL,
+            price_checked_24h INTEGER DEFAULT 0,
+            price_change_24h_pct REAL,
             tx_count INTEGER,
             is_new_holder INTEGER,
             last_seen TEXT
@@ -70,6 +73,12 @@ def init_db():
     cols = [r[1] for r in con.execute("PRAGMA table_info(whale_moves)")]
     if "is_new_holder" not in cols:
         con.execute("ALTER TABLE whale_moves ADD COLUMN is_new_holder INTEGER")
+    if "price_usd_at_detection" not in cols:
+        con.execute("ALTER TABLE whale_moves ADD COLUMN price_usd_at_detection REAL")
+    if "price_checked_24h" not in cols:
+        con.execute("ALTER TABLE whale_moves ADD COLUMN price_checked_24h INTEGER DEFAULT 0")
+    if "price_change_24h_pct" not in cols:
+        con.execute("ALTER TABLE whale_moves ADD COLUMN price_change_24h_pct REAL")
     return con
 
 
@@ -185,6 +194,7 @@ def analyze_token(url, token_address, pool_label, price_usd, from_block, from_bl
             "wallet": addr,
             "net_tokens": flow,
             "net_usd": flow * price_usd,
+            "price_usd_at_detection": price_usd,
             "tx_count": tx_count[addr],
             "is_new_holder": is_new,
             "last_seen": last_seen.get(addr),
@@ -254,9 +264,11 @@ def main():
     for w in all_whales:
         con.execute(
             "INSERT INTO whale_moves (detected_at, token_address, pool_label, wallet,"
-            " net_tokens, net_usd, tx_count, is_new_holder, last_seen) VALUES (?,?,?,?,?,?,?,?,?)",
+            " net_tokens, net_usd, price_usd_at_detection, tx_count, is_new_holder, last_seen)"
+            " VALUES (?,?,?,?,?,?,?,?,?,?)",
             (now, w["token_address"], w["pool"], w["wallet"], w["net_tokens"],
-             w["net_usd"], w["tx_count"], int(w["is_new_holder"]), w["last_seen"]),
+             w["net_usd"], w["price_usd_at_detection"], w["tx_count"],
+             int(w["is_new_holder"]), w["last_seen"]),
         )
         key = (w["token_address"], w["wallet"])
         if key not in already_notified:
