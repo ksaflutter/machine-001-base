@@ -54,6 +54,14 @@ def age_days(created):
     return (datetime.now(timezone.utc) - t).total_seconds() / 86400
 
 
+def extract_token_address(pool):
+    try:
+        raw = pool["relationships"]["base_token"]["data"]["id"]
+        return raw.split("_", 1)[1] if "_" in raw else raw
+    except (KeyError, IndexError):
+        return None
+
+
 def evaluate(age, liq, vol, chg24):
     reasons = []
     if age < MIN_AGE_DAYS:
@@ -75,6 +83,7 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             seen_at TEXT,
             pool_address TEXT,
+            token_address TEXT,
             name TEXT,
             age_days REAL,
             liquidity_usd REAL,
@@ -93,6 +102,9 @@ def init_db():
             first_notified_at TEXT
         )"""
     )
+    cols = [r[1] for r in con.execute("PRAGMA table_info(observations)")]
+    if "token_address" not in cols:
+        con.execute("ALTER TABLE observations ADD COLUMN token_address TEXT")
     return con
 
 
@@ -141,15 +153,16 @@ def main():
         c24 = num(chg.get("h24"))
         price = num(a.get("base_token_price_usd"))
         address = a.get("address")
+        token_address = extract_token_address(pool)
         name = a.get("name")
         decision, reasons = evaluate(age, liq, vol, c24)
 
         con.execute(
-            "INSERT INTO observations (seen_at, pool_address, name, age_days,"
-            " liquidity_usd, volume_24h, price_usd, change_1h, change_24h,"
-            " decision, reasons) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-            (now, address, name, age, liq, vol, price, c1, c24, decision,
-             "; ".join(reasons)),
+            "INSERT INTO observations (seen_at, pool_address, token_address, name,"
+            " age_days, liquidity_usd, volume_24h, price_usd, change_1h, change_24h,"
+            " decision, reasons) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
+            (now, address, token_address, name, age, liq, vol, price, c1, c24,
+             decision, "; ".join(reasons)),
         )
 
         if decision == "LOLOS":
