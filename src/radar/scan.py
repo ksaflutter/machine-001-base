@@ -1,4 +1,5 @@
 import json
+import os
 import sqlite3
 import urllib.request
 from datetime import datetime, timezone
@@ -52,6 +53,7 @@ def evaluate(age, liq, vol, chg24):
 
 
 def init_db():
+    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
     con = sqlite3.connect(DB_PATH)
     con.execute(
         """CREATE TABLE IF NOT EXISTS observations (
