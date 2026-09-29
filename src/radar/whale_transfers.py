@@ -55,6 +55,7 @@ def init_db():
             net_tokens REAL,
             net_usd REAL,
             tx_count INTEGER,
+            is_new_holder INTEGER,
             last_seen TEXT
         )"""
     )
@@ -66,6 +67,9 @@ def init_db():
             PRIMARY KEY (token_address, wallet)
         )"""
     )
+    cols = [r[1] for r in con.execute("PRAGMA table_info(whale_moves)")]
+    if "is_new_holder" not in cols:
+        con.execute("ALTER TABLE whale_moves ADD COLUMN is_new_holder INTEGER")
     return con
 
 
@@ -116,7 +120,31 @@ def fetch_all_transfers(url, token_address, from_block):
     return all_transfers
 
 
-def analyze_token(url, token_address, pool_label, price_usd, from_block):
+def has_prior_activity(url, token_address, wallet, before_block_int):
+    """Cek apakah wallet ini pernah bertransaksi token ini SEBELUM jendela waktu sekarang."""
+    if before_block_int <= 0:
+        return False
+    to_block = hex(before_block_int - 1)
+    for direction in ("fromAddress", "toAddress"):
+        params = {
+            "fromBlock": "0x0",
+            "toBlock": to_block,
+            "contractAddresses": [token_address],
+            "category": ["erc20"],
+            "maxCount": "0x1",
+            "order": "desc",
+            direction: wallet,
+        }
+        try:
+            result = rpc(url, "alchemy_getAssetTransfers", [params])
+        except SystemExit:
+            continue
+        if result.get("transfers"):
+            return True
+    return False
+
+
+def analyze_token(url, token_address, pool_label, price_usd, from_block, from_block_int):
     transfers = fetch_all_transfers(url, token_address, from_block)
     if not transfers:
         return [], 0
@@ -150,6 +178,7 @@ def analyze_token(url, token_address, pool_label, price_usd, from_block):
         if tx_count[addr] >= CONTRACT_TX_THRESHOLD:
             skipped += 1
             continue
+        is_new = not has_prior_activity(url, token_address, addr, from_block_int)
         results.append({
             "pool": pool_label,
             "token_address": token_address,
@@ -157,6 +186,7 @@ def analyze_token(url, token_address, pool_label, price_usd, from_block):
             "net_tokens": flow,
             "net_usd": flow * price_usd,
             "tx_count": tx_count[addr],
+            "is_new_holder": is_new,
             "last_seen": last_seen.get(addr),
         })
     return results, skipped
@@ -197,7 +227,8 @@ def main():
         return
 
     latest = int(rpc(url, "eth_blockNumber", []), 16)
-    from_block = hex(max(latest - BLOCKS_LOOKBACK, 0))
+    from_block_int = max(latest - BLOCKS_LOOKBACK, 0)
+    from_block = hex(from_block_int)
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
 
     already_notified = {
@@ -208,9 +239,12 @@ def main():
     for token_address, pool_label, price_usd in tokens:
         print(f"Memindai: {pool_label} ...")
         try:
-            whales, skipped = analyze_token(url, token_address, pool_label, price_usd, from_block)
+            whales, skipped = analyze_token(
+                url, token_address, pool_label, price_usd, from_block, from_block_int
+            )
             all_whales.extend(whales)
-            print(f"  whale: {len(whales)} | kontrak/router disaring: {skipped}")
+            new_count = sum(1 for w in whales if w["is_new_holder"])
+            print(f"  whale: {len(whales)} (baru: {new_count}) | kontrak/router disaring: {skipped}")
         except Exception as e:
             print(f"  gagal: {type(e).__name__}: {e}")
 
@@ -220,9 +254,9 @@ def main():
     for w in all_whales:
         con.execute(
             "INSERT INTO whale_moves (detected_at, token_address, pool_label, wallet,"
-            " net_tokens, net_usd, tx_count, last_seen) VALUES (?,?,?,?,?,?,?,?)",
+            " net_tokens, net_usd, tx_count, is_new_holder, last_seen) VALUES (?,?,?,?,?,?,?,?,?)",
             (now, w["token_address"], w["pool"], w["wallet"], w["net_tokens"],
-             w["net_usd"], w["tx_count"], w["last_seen"]),
+             w["net_usd"], w["tx_count"], int(w["is_new_holder"]), w["last_seen"]),
         )
         key = (w["token_address"], w["wallet"])
         if key not in already_notified:
@@ -241,7 +275,8 @@ def main():
     print(f"Baru (belum pernah dinotifikasi): {len(new_whales)}\n")
 
     for w in all_whales[:20]:
-        print(f"${w['net_usd']:,.0f}  ({w['net_tokens']:,.2f} token, {w['tx_count']} tx)")
+        tag = "BARU DI TOKEN INI" if w["is_new_holder"] else "sudah pegang sebelumnya"
+        print(f"${w['net_usd']:,.0f}  ({w['net_tokens']:,.2f} token, {w['tx_count']} tx) [{tag}]")
         print(f"  token : {w['pool']}")
         print(f"  wallet: {w['wallet']}")
         print(f"  waktu : {w['last_seen']}")
@@ -250,8 +285,9 @@ def main():
     if new_whales:
         lines = ["Machine 001 Whale Watcher: pergerakan baru\n"]
         for w in new_whales[:10]:
+            tag = "BARU di token ini" if w["is_new_holder"] else "nambah posisi lama"
             lines.append(
-                f"- {w['pool']}\n"
+                f"- {w['pool']} [{tag}]\n"
                 f"  ${w['net_usd']:,.0f} ({w['net_tokens']:,.2f} token, {w['tx_count']} tx)\n"
                 f"  wallet: {w['wallet'][:10]}...{w['wallet'][-6:]}"
             )
