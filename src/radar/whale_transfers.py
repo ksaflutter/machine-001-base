@@ -22,7 +22,7 @@ def load_config():
                 if line and not line.startswith("#") and "=" in line:
                     k, v = line.split("=", 1)
                     config[k] = v
-    for key in ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID"):
+    for key in ("TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "BASE_RPC_URL"):
         if os.environ.get(key):
             config[key] = os.environ[key]
     return config
