@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Machine 001 Base - Dashboard</title>
+<style>
+  body { font-family: -apple-system, sans-serif; background: #0d1117; color: #c9d1d9; margin: 0; padding: 16px; }
+  h1 { color: #58a6ff; font-size: 20px; }
+  h2 { color: #58a6ff; font-size: 16px; margin-top: 24px; }
+  .updated { color: #8b949e; font-size: 12px; margin-bottom: 16px; }
+  .stats { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .stat-box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 12px 16px; flex: 1; min-width: 120px; }
+  .stat-box .num { font-size: 22px; font-weight: bold; color: #58a6ff; }
+  .stat-box .label { font-size: 11px; color: #8b949e; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 24px; }
+  th { text-align: left; padding: 6px 8px; background: #161b22; color: #8b949e; border-bottom: 1px solid #30363d; }
+  td { padding: 6px 8px; border-bottom: 1px solid #21262d; }
+  .green { color: #3fb950; }
+  .red { color: #f85149; }
+  .pending { color: #8b949e; }
+  .mono { font-family: monospace; font-size: 11px; }
+  .badge { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; }
+  .badge.new { background: #1f6feb33; color: #58a6ff; }
+  .badge.old { background: #30363d; color: #8b949e; }
+  .scroll { overflow-x: auto; }
+</style>
+</head>
+<body>
+  <h1>Machine 001 Base — Radar &amp; Whale Watcher</h1>
+  <div class="updated">Terakhir diperbarui: 2026-10-01 06:30 UTC</div>
+
+  <div class="stats">
+    <div class="stat-box"><div class="num">85</div><div class="label">Token watchlist (24 jam)</div></div>
+    <div class="stat-box"><div class="num">408</div><div class="label">Total whale move tercatat</div></div>
+    <div class="stat-box"><div class="num">0</div><div class="label">Sudah dicek hasil 24 jam</div></div>
+    <div class="stat-box"><div class="num">0%</div><div class="label">Persentase naik (dari yang dicek)</div></div>
+  </div>
+
+  <h2>Watchlist Token (24 jam terakhir)</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>Token</th><th>Likuiditas</th><th>Volume 24j</th><th>Harga 24j</th><th>Terdeteksi</th></tr>
+    
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$3,759,284</td>
+          <td>$2,084,114</td>
+          <td class="red">-20.1%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>DRB / WETH 1%</td>
+          <td>$1,746,542</td>
+          <td>$298,135</td>
+          <td class="green">+16.9%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / USDC</td>
+          <td>$42,767,261</td>
+          <td>$4,801,551</td>
+          <td class="green">+5.7%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$18,261,106</td>
+          <td>$1,712,803</td>
+          <td class="green">+5.5%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>BNKR / WETH 1%</td>
+          <td>$2,733,796</td>
+          <td>$86,875</td>
+          <td class="green">+0.5%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>KTA / WETH</td>
+          <td>$4,282,536</td>
+          <td>$403,805</td>
+          <td class="red">-5.1%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>GITLAWB / WETH</td>
+          <td>$554,839</td>
+          <td>$305,825</td>
+          <td class="red">-8.1%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>ICP / WETH 0.05%</td>
+          <td>$719,036</td>
+          <td>$1,024,888</td>
+          <td class="red">-1.4%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>DOT / ETH 1%</td>
+          <td>$705,433</td>
+          <td>$264,124</td>
+          <td class="red">-4.8%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>STONKEX / WETH 1%</td>
+          <td>$397,608</td>
+          <td>$223,765</td>
+          <td class="green">+23.3%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>EDEL / WETH</td>
+          <td>$1,119,447</td>
+          <td>$637,278</td>
+          <td class="green">+26.3%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>BLUECHIP / USDC 0.02%</td>
+          <td>$105,744</td>
+          <td>$524,333</td>
+          <td class="red">-6.4%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / cbBTC 0.6%</td>
+          <td>$1,787,162</td>
+          <td>$8,308,590</td>
+          <td class="green">+5.2%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>SPIKE / ETH</td>
+          <td>$289,077</td>
+          <td>$657,550</td>
+          <td class="red">-28.2%</td>
+          <td>2026-10-01T06:27:33+00:00</td>
+        </tr>
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$3,662,221</td>
+          <td>$2,087,099</td>
+          <td class="red">-23.7%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>DRB / WETH 1%</td>
+          <td>$1,720,961</td>
+          <td>$287,338</td>
+          <td class="green">+15.3%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / USDC</td>
+          <td>$42,584,703</td>
+          <td>$4,603,815</td>
+          <td class="green">+4.4%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>KTA / WETH</td>
+          <td>$4,266,440</td>
+          <td>$423,759</td>
+          <td class="red">-6.9%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>ICP / WETH 0.05%</td>
+          <td>$720,492</td>
+          <td>$1,057,481</td>
+          <td class="red">-1.6%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>GITLAWB / WETH</td>
+          <td>$553,519</td>
+          <td>$302,338</td>
+          <td class="red">-5.3%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>BNKR / WETH 1%</td>
+          <td>$2,729,410</td>
+          <td>$86,840</td>
+          <td class="red">-2.0%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$18,174,535</td>
+          <td>$1,684,483</td>
+          <td class="green">+4.9%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>DOT / ETH 1%</td>
+          <td>$704,530</td>
+          <td>$273,649</td>
+          <td class="red">-6.7%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>EDEL / WETH</td>
+          <td>$1,116,499</td>
+          <td>$650,407</td>
+          <td class="green">+19.9%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>STONKEX / WETH 1%</td>
+          <td>$380,008</td>
+          <td>$227,224</td>
+          <td class="green">+10.6%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / cbBTC 0.6%</td>
+          <td>$1,785,888</td>
+          <td>$8,081,821</td>
+          <td class="green">+4.9%</td>
+          <td>2026-10-01T05:16:47+00:00</td>
+        </tr>
+        <tr>
+          <td>DRB / WETH 1%</td>
+          <td>$1,663,837</td>
+          <td>$160,239</td>
+          <td class="green">+4.9%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / USDC</td>
+          <td>$42,089,519</td>
+          <td>$4,258,809</td>
+          <td class="red">-0.5%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>GITLAWB / WETH</td>
+          <td>$548,934</td>
+          <td>$288,527</td>
+          <td class="red">-25.7%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>DOT / ETH 1%</td>
+          <td>$699,297</td>
+          <td>$656,478</td>
+          <td class="green">+15.3%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>ICP / WETH 0.05%</td>
+          <td>$714,488</td>
+          <td>$1,264,751</td>
+          <td class="red">-4.5%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>EDEL / WETH</td>
+          <td>$1,131,237</td>
+          <td>$770,826</td>
+          <td class="green">+20.8%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>STONKEX / WETH 1%</td>
+          <td>$374,004</td>
+          <td>$299,184</td>
+          <td class="green">+6.4%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>SPIKE / ETH</td>
+          <td>$279,333</td>
+          <td>$1,097,327</td>
+          <td class="green">+18.1%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>BNKR / WETH 1%</td>
+          <td>$2,702,954</td>
+          <td>$88,793</td>
+          <td class="red">-1.6%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>KTA / WETH</td>
+          <td>$4,230,269</td>
+          <td>$623,972</td>
+          <td class="green">+0.5%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$17,978,212</td>
+          <td>$1,761,258</td>
+          <td class="green">+1.6%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>BLUECHIP / USDC 0.035%</td>
+          <td>$126,318</td>
+          <td>$616,246</td>
+          <td class="red">-12.8%</td>
+          <td>2026-09-30T20:41:10+00:00</td>
+        </tr>
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$3,752,781</td>
+          <td>$5,261,778</td>
+          <td class="red">-20.7%</td>
+          <td>2026-09-30T14:47:55+00:00</td>
+        </tr>
+        <tr>
+          <td>DRB / WETH 1%</td>
+          <td>$1,632,635</td>
+          <td>$231,789</td>
+          <td class="red">-4.2%</td>
+          <td>2026-09-30T14:47:55+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / USDC</td>
+          <td>$41,947,794</td>
+          <td>$4,515,256</td>
+          <td class="green">+0.0%</td>
+          <td>2026-09-30T14:47:55+00:00</td>
+        </tr>
+        <tr>
+          <td>DOT / ETH 1%</td>
+          <td>$679,404</td>
+          <td>$606,469</td>
+          <td class="green">+14.8%</td>
+          <td>2026-09-30T14:47:55+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$18,005,156</td>
+          <td>$1,706,591</td>
+          <td class="green">+1.6%</td>
+          <td>2026-09-30T14:47:55+00:00</td>
+        </tr>
+        <tr>
+          <td>EDEL / WETH</td>
+          <td>$1,094,113</td>
+          <td>$910,722</td>
+          <td class="green">+0.5%</td>
+          <td>2026-09-30T14:47:55+00:00</td>
+        </tr>
+        <tr>
+          <td>KTA / WETH</td>
+          <td>$4,217,676</td>
+          <td>$727,968</td>
+          <td class="red">-5.0%</td>
+          <td>2026-09-30T14:47:55+00:00</td>
+        </tr>
+        <tr>
+          <td>ICP / WETH 0.05%</td>
+          <td>$717,527</td>
+          <td>$1,529,579</td>
+          <td class="red">-1.5%</td>
+          <td>2026-09-30T14:47:55+00:00</td>
+        </tr>
+        <tr>
+          <td>BNKR / WETH 1%</td>
+          <td>$2,773,754</td>
+          <td>$57,107</td>
+          <td class="red">-3.7%</td>
+          <td>2026-09-30T14:47:55+00:00</td>
+        </tr>
+        <tr>
+          <td>STONKEX / WETH 1%</td>
+          <td>$383,578</td>
+          <td>$416,307</td>
+          <td class="red">-0.2%</td>
+          <td>2026-09-30T14:47:55+00:00</td>
+        </tr>
+        <tr>
+          <td>NVDAc / USDC 0.194%</td>
+          <td>$2,226,681</td>
+          <td>$10,208,361</td>
+          <td class="red">-0.1%</td>
+          <td>2026-09-30T14:47:55+00:00</td>
+        </tr>
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$3,928,422</td>
+          <td>$4,960,395</td>
+          <td class="red">-12.6%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>DRB / WETH 1%</td>
+          <td>$1,609,467</td>
+          <td>$232,048</td>
+          <td class="red">-6.6%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>SPIKE / ETH</td>
+          <td>$278,258</td>
+          <td>$1,333,514</td>
+          <td class="green">+50.9%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$17,936,488</td>
+          <td>$1,596,227</td>
+          <td class="red">-2.1%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / USDC</td>
+          <td>$41,716,172</td>
+          <td>$3,745,172</td>
+          <td class="red">-3.3%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>KTA / WETH</td>
+          <td>$4,239,153</td>
+          <td>$683,198</td>
+          <td class="red">-5.5%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>EDEL / WETH</td>
+          <td>$1,052,490</td>
+          <td>$603,718</td>
+          <td class="red">-10.5%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>DOT / ETH 1%</td>
+          <td>$633,507</td>
+          <td>$627,162</td>
+          <td class="green">+35.6%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>BNKR / WETH 1%</td>
+          <td>$2,786,006</td>
+          <td>$68,576</td>
+          <td class="green">+0.7%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>STONKEX / WETH 1%</td>
+          <td>$363,347</td>
+          <td>$410,103</td>
+          <td class="red">-22.7%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>ICP / WETH 0.05%</td>
+          <td>$722,481</td>
+          <td>$1,675,162</td>
+          <td class="green">+2.3%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>EDGE / cbBTC</td>
+          <td>$691,124</td>
+          <td>$295,501</td>
+          <td class="green">+1.4%</td>
+          <td>2026-09-30T11:17:56+00:00</td>
+        </tr>
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$4,177,828</td>
+          <td>$4,967,023</td>
+          <td class="red">-1.7%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>DRB / WETH 1%</td>
+          <td>$1,601,019</td>
+          <td>$218,555</td>
+          <td class="red">-6.1%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>FLOWER / USDC 0.3%</td>
+          <td>$221,939</td>
+          <td>$64,335</td>
+          <td class="red">-4.3%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>BNKR / WETH 1%</td>
+          <td>$2,783,732</td>
+          <td>$76,939</td>
+          <td class="green">+1.8%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>DOT / ETH 1%</td>
+          <td>$1,542,710</td>
+          <td>$749,575</td>
+          <td class="green">+56.7%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / USDC</td>
+          <td>$41,448,730</td>
+          <td>$4,336,690</td>
+          <td class="red">-3.1%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$17,720,971</td>
+          <td>$1,586,574</td>
+          <td class="red">-1.7%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>EDEL / WETH</td>
+          <td>$1,019,280</td>
+          <td>$650,731</td>
+          <td class="red">-11.0%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>KTA / WETH</td>
+          <td>$4,394,300</td>
+          <td>$590,128</td>
+          <td class="green">+4.0%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>Basecat / WETH 1%</td>
+          <td>$108,460</td>
+          <td>$100,980</td>
+          <td class="red">-5.5%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>ICP / WETH 0.05%</td>
+          <td>$723,931</td>
+          <td>$1,758,534</td>
+          <td class="green">+6.0%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>STONKEX / WETH 1%</td>
+          <td>$345,564</td>
+          <td>$416,187</td>
+          <td class="red">-26.2%</td>
+          <td>2026-09-30T05:03:01+00:00</td>
+        </tr>
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$4,092,041</td>
+          <td>$4,968,156</td>
+          <td class="red">-1.8%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+        <tr>
+          <td>DRB / WETH 1%</td>
+          <td>$1,601,744</td>
+          <td>$229,103</td>
+          <td class="red">-2.7%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+        <tr>
+          <td>FLOWER / USDC 0.3%</td>
+          <td>$221,690</td>
+          <td>$65,251</td>
+          <td class="red">-3.2%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+        <tr>
+          <td>BNKR / WETH 1%</td>
+          <td>$2,760,378</td>
+          <td>$79,349</td>
+          <td class="green">+2.1%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+        <tr>
+          <td>DOT / ETH 1%</td>
+          <td>$1,571,875</td>
+          <td>$746,572</td>
+          <td class="green">+61.8%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / USDC</td>
+          <td>$41,515,219</td>
+          <td>$4,395,854</td>
+          <td class="red">-3.0%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$17,769,735</td>
+          <td>$1,601,783</td>
+          <td class="red">-1.9%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+        <tr>
+          <td>EDEL / WETH</td>
+          <td>$1,018,018</td>
+          <td>$648,676</td>
+          <td class="red">-12.2%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+        <tr>
+          <td>KTA / WETH</td>
+          <td>$4,392,724</td>
+          <td>$593,108</td>
+          <td class="green">+3.6%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+        <tr>
+          <td>STONKEX / WETH 1%</td>
+          <td>$353,867</td>
+          <td>$411,514</td>
+          <td class="red">-22.1%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+        <tr>
+          <td>ICP / WETH 0.05%</td>
+          <td>$723,765</td>
+          <td>$1,776,271</td>
+          <td class="green">+5.6%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+        <tr>
+          <td>EDGE / cbBTC</td>
+          <td>$692,772</td>
+          <td>$305,857</td>
+          <td class="red">-2.3%</td>
+          <td>2026-09-30T04:29:23+00:00</td>
+        </tr>
+  </table>
+  </div>
+
+  <h2>Wallet Watch — Wallet yang Berulang Muncul</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>Wallet</th><th>Muncul</th><th>Token Unik</th><th>Total Nilai</th><th>Token</th><th>Terakhir Terlihat</th></tr>
+    
+        <tr>
+          <td class="mono">0x20fe51...cf3b7a</td>
+          <td>10x</td>
+          <td>4</td>
+          <td>$465,986</td>
+          <td>KTA / WETH,BNKR / WETH 1%,VVV / WETH,EDGE / cbBTC</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0xbaed38...e9439f</td>
+          <td>6x</td>
+          <td>2</td>
+          <td>$388,097</td>
+          <td>VVV / WETH,AERO / USDC,AERO / USDC | AERO / cbBTC 0.6%</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x1985ea...b25c87</td>
+          <td>6x</td>
+          <td>3</td>
+          <td>$61,182</td>
+          <td>BNKR / WETH 1%,KTA / WETH,EDGE / cbBTC</td>
+          <td>2026-09-30T20:41:11+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x4b5c71...1634f6</td>
+          <td>5x</td>
+          <td>3</td>
+          <td>$394,815</td>
+          <td>AERO / USDC,VVV / WETH,EDGE / cbBTC</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x000000...000000</td>
+          <td>5x</td>
+          <td>2</td>
+          <td>$121,417</td>
+          <td>ICP / WETH 0.05%,NVDAc / USDC 0.194%</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x26b610...917419</td>
+          <td>5x</td>
+          <td>2</td>
+          <td>$25,719</td>
+          <td>DRB / WETH 1%,Basecat / WETH 1%</td>
+          <td>2026-09-30T20:41:11+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x40ebc1...2750c6</td>
+          <td>4x</td>
+          <td>3</td>
+          <td>$121,144</td>
+          <td>VVV / WETH,EDGE / cbBTC,BNKR / WETH 1%</td>
+          <td>2026-09-30T20:41:11+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x15da75...dcb0d7</td>
+          <td>4x</td>
+          <td>4</td>
+          <td>$110,540</td>
+          <td>KTA / WETH,EDGE / cbBTC,AERO / USDC | AERO / cbBTC 0.6%,V...</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0xd13da0...28791f</td>
+          <td>4x</td>
+          <td>3</td>
+          <td>$48,094</td>
+          <td>BNKR / WETH 1%,VVV / WETH,Basecat / WETH 1%</td>
+          <td>2026-09-30T20:41:11+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x0b48e0...1c266b</td>
+          <td>3x</td>
+          <td>1</td>
+          <td>$15,964</td>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x3304e2...7b566a</td>
+          <td>3x</td>
+          <td>1</td>
+          <td>$10,221</td>
+          <td>AERO / USDC,AERO / USDC | AERO / cbBTC 0.6%</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0xc882b1...84f071</td>
+          <td>2x</td>
+          <td>1</td>
+          <td>$2,622,798</td>
+          <td>VVV / WETH</td>
+          <td>2026-09-30T05:03:02+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0xec2ca5...b2490f</td>
+          <td>2x</td>
+          <td>1</td>
+          <td>$333,833</td>
+          <td>AERO / USDC</td>
+          <td>2026-09-30T05:03:02+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x1c24a0...fcc698</td>
+          <td>2x</td>
+          <td>1</td>
+          <td>$295,539</td>
+          <td>KTA / WETH</td>
+          <td>2026-09-30T05:03:02+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x187b6a...082368</td>
+          <td>2x</td>
+          <td>1</td>
+          <td>$269,561</td>
+          <td>VVV / WETH</td>
+          <td>2026-09-30T05:03:02+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x5ad69a...5ec1df</td>
+          <td>2x</td>
+          <td>1</td>
+          <td>$259,494</td>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>2026-09-30T05:03:02+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x002dbd...bff71e</td>
+          <td>2x</td>
+          <td>1</td>
+          <td>$168,021</td>
+          <td>DOT / ETH 1%</td>
+          <td>2026-09-30T05:03:02+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x57cdd2...01645b</td>
+          <td>2x</td>
+          <td>1</td>
+          <td>$107,849</td>
+          <td>EDGE / cbBTC</td>
+          <td>2026-09-30T14:47:56+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0x9b0c45...ba8d46</td>
+          <td>2x</td>
+          <td>1</td>
+          <td>$66,221</td>
+          <td>KTA / WETH</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td class="mono">0xe56162...0ab9f0</td>
+          <td>2x</td>
+          <td>1</td>
+          <td>$63,347</td>
+          <td>Basecat / WETH 1%</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+  </table>
+  </div>
+
+  <h2>Whale Move Terbaru (40 terakhir)</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>Token</th><th>Nilai</th><th>Jenis</th><th>Umur Wallet</th><th>Hasil 24j</th><th>Wallet</th><th>Waktu</th></tr>
+    
+        <tr>
+          <td>AERO / USDC | AERO / cbBTC 0.6%</td>
+          <td>$210,681</td>
+          <td><span class="badge old">lama</span></td>
+          <td>baru (&lt;14 hari)</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0xe1cf68...5ba722</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$195,360</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0xbaed38...e9439f</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>EDGE / cbBTC</td>
+          <td>$63,074</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x4b5c71...1634f6</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>DRB / WETH 1%</td>
+          <td>$49,375</td>
+          <td><span class="badge new">BARU</span></td>
+          <td>SANGAT BARU (&lt;3 hari)</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x50130a...65884d</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$45,310</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0xc9d9c6...4cb415</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>KTA / WETH</td>
+          <td>$45,164</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x9b0c45...ba8d46</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / USDC | AERO / cbBTC 0.6%</td>
+          <td>$42,140</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0xbaed38...e9439f</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>DOT / ETH 1%</td>
+          <td>$39,140</td>
+          <td><span class="badge new">BARU</span></td>
+          <td>SANGAT BARU (&lt;3 hari)</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x4de737...1987ff</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$36,033</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x44a3e0...bec61b</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>Basecat / WETH 1%</td>
+          <td>$33,802</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0xe56162...0ab9f0</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$32,922</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x8527cd...3c2521</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$32,909</td>
+          <td><span class="badge new">BARU</span></td>
+          <td>SANGAT BARU (&lt;3 hari)</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x640360...d00ef4</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / USDC | AERO / cbBTC 0.6%</td>
+          <td>$32,535</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x15da75...dcb0d7</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$31,144</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x15da75...dcb0d7</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>DRB / WETH 1%</td>
+          <td>$29,456</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x2e26c9...ae1ead</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>NVDAc / USDC 0.194%</td>
+          <td>$26,347</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x000000...000000</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$23,927</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x18b0f4...281e9f</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$20,031</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x4b5c71...1634f6</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>STONKEX / WETH 1%</td>
+          <td>$19,424</td>
+          <td><span class="badge new">BARU</span></td>
+          <td>SANGAT BARU (&lt;3 hari)</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x8de1a5...7c2654</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>EDGE / cbBTC</td>
+          <td>$18,437</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0xb3b753...1399e9</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$17,285</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x57483d...352d40</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>BNKR / WETH 1%</td>
+          <td>$13,266</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x20fe51...cf3b7a</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$13,264</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x8b12ca...e61a8e</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>EDGE / cbBTC</td>
+          <td>$11,252</td>
+          <td><span class="badge new">BARU</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x443d18...6dbea5</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>Basecat / WETH 1%</td>
+          <td>$10,173</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x017509...7d1a75</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>Basecat / WETH 1%</td>
+          <td>$10,168</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x4dfd15...89c5c4</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$10,133</td>
+          <td><span class="badge new">BARU</span></td>
+          <td>SANGAT BARU (&lt;3 hari)</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x885f4d...9e64a5</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$10,121</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x5b2254...da2802</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$9,936</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x8c0b44...f6f78c</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>BLUECHIP / USDC 0.02% | BLUECHIP / USDC 0.035%</td>
+          <td>$9,919</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x3755fb...54a914</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>EDGE / cbBTC</td>
+          <td>$8,955</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x20fe51...cf3b7a</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>STONKEX / WETH 1%</td>
+          <td>$8,474</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0xd249b2...b90416</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>VVV / WETH</td>
+          <td>$7,992</td>
+          <td><span class="badge new">BARU</span></td>
+          <td>SANGAT BARU (&lt;3 hari)</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x8738fe...5182e1</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>EDGE / cbBTC</td>
+          <td>$6,912</td>
+          <td><span class="badge old">lama</span></td>
+          <td>baru (&lt;14 hari)</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0xf5f815...d6ce36</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>NVDAc / USDC 0.194%</td>
+          <td>$6,702</td>
+          <td><span class="badge new">BARU</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x0e634c...b696a9</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / USDC | AERO / cbBTC 0.6%</td>
+          <td>$6,677</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0xd34ea7...01469c</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>KTA / WETH</td>
+          <td>$6,232</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x20fe51...cf3b7a</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>TIBBIR / VIRTUAL</td>
+          <td>$6,203</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0x4a778b...73c67e</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>AERO / USDC | AERO / cbBTC 0.6%</td>
+          <td>$6,083</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0xc207df...94cfdf</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+        <tr>
+          <td>DRB / WETH 1%</td>
+          <td>$5,564</td>
+          <td><span class="badge old">lama</span></td>
+          <td>wallet lama</td>
+          <td><span class="pending">menunggu</span></td>
+          <td class="mono">0xae2171...d8f707</td>
+          <td>2026-10-01T06:27:34+00:00</td>
+        </tr>
+  </table>
+  </div>
+</body>
+</html>
