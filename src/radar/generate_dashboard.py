@@ -32,6 +32,20 @@ def main():
            LIMIT 40"""
     ).fetchall()
 
+    wallet_watch = con.execute(
+        """SELECT wallet,
+                  COUNT(*) as appearances,
+                  COUNT(DISTINCT token_address) as unique_tokens,
+                  SUM(net_usd) as total_usd,
+                  GROUP_CONCAT(DISTINCT pool_label) as tokens,
+                  MAX(detected_at) as last_seen
+           FROM whale_moves
+           GROUP BY wallet
+           HAVING COUNT(*) > 1
+           ORDER BY appearances DESC, total_usd DESC
+           LIMIT 20"""
+    ).fetchall()
+
     total_whales = con.execute("SELECT COUNT(*) FROM whale_moves").fetchone()[0]
     checked = con.execute(
         "SELECT COUNT(*) FROM whale_moves WHERE price_checked_24h = 1"
@@ -72,6 +86,20 @@ def main():
           <td>{outcome}</td>
           <td class="mono">{short_wallet}</td>
           <td>{esc(detected_at)}</td>
+        </tr>"""
+
+    wallet_rows = ""
+    for wallet, appearances, unique_tokens, total_usd, tokens, last_seen in wallet_watch:
+        short_wallet = f"{wallet[:8]}...{wallet[-6:]}"
+        tokens_short = tokens if len(tokens) < 60 else tokens[:57] + "..."
+        wallet_rows += f"""
+        <tr>
+          <td class="mono">{short_wallet}</td>
+          <td>{appearances}x</td>
+          <td>{unique_tokens}</td>
+          <td>${total_usd:,.0f}</td>
+          <td>{esc(tokens_short)}</td>
+          <td>{esc(last_seen)}</td>
         </tr>"""
 
     pct_up = (up / checked * 100) if checked > 0 else 0
@@ -120,6 +148,14 @@ def main():
   <table>
     <tr><th>Token</th><th>Likuiditas</th><th>Volume 24j</th><th>Harga 24j</th><th>Terdeteksi</th></tr>
     {watch_rows if watch_rows else '<tr><td colspan="5">Belum ada data</td></tr>'}
+  </table>
+  </div>
+
+  <h2>Wallet Watch — Wallet yang Berulang Muncul</h2>
+  <div class="scroll">
+  <table>
+    <tr><th>Wallet</th><th>Muncul</th><th>Token Unik</th><th>Total Nilai</th><th>Token</th><th>Terakhir Terlihat</th></tr>
+    {wallet_rows if wallet_rows else "<tr><td colspan='6'>Belum ada wallet yang muncul berulang</td></tr>"}
   </table>
   </div>
 
