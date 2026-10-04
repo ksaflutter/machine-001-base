@@ -33,6 +33,9 @@ jobs:
           BASE_RPC_URL: ${{ secrets.BASE_RPC_URL }}
         run: python3 src/radar/whale_transfers.py
 
+      - name: Run paper trading
+        run: python3 src/radar/paper_trading.py
+
       - name: Commit updated database
         run: |
           git config user.name "machine-001-bot"
