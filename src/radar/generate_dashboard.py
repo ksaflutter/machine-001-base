@@ -11,12 +11,21 @@ def esc(s):
     return str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
+def addr_cell(a):
+    if not a:
+        return '<span class="pending">-</span>'
+    a = esc(a)
+    return (f'<span class="mono">{a[:6]}...{a[-4:]}</span> '
+            f'<button class="cp" data-a="{a}" onclick="cp(this)">Copy</button> '
+            f'<a href="https://dexscreener.com/base/{a}" target="_blank" rel="noopener">chart</a>')
+
+
 def main():
     con = sqlite3.connect(DB_PATH)
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 
     watchlist = con.execute(
-        """SELECT name, liquidity_usd, volume_24h, change_24h, price_usd, seen_at
+        """SELECT name, liquidity_usd, volume_24h, change_24h, price_usd, seen_at, token_address
            FROM observations
            WHERE decision = 'LOLOS'
            AND seen_at >= datetime('now', '-1 day')
@@ -24,7 +33,7 @@ def main():
     ).fetchall()
 
     whales = con.execute(
-        """SELECT pool_label, wallet, net_usd, net_tokens, tx_count,
+        """SELECT pool_label, wallet, net_usd, net_tokens, tx_count, token_address,
                   is_new_holder, wallet_age_tag, detected_at,
                   price_checked_24h, price_change_24h_pct
            FROM whale_moves
@@ -57,7 +66,7 @@ def main():
     con.close()
 
     watch_rows = ""
-    for name, liq, vol, chg24, price, seen_at in watchlist:
+    for name, liq, vol, chg24, price, seen_at, ta in watchlist:
         color = "green" if (chg24 or 0) >= 0 else "red"
         watch_rows += f"""
         <tr>
@@ -66,10 +75,11 @@ def main():
           <td>${vol:,.0f}</td>
           <td class="{color}">{chg24:+.1f}%</td>
           <td>{esc(seen_at)}</td>
+          <td>{addr_cell(ta)}</td>
         </tr>"""
 
     whale_rows = ""
-    for pool, wallet, net_usd, net_tokens, tx_count, is_new, age_tag, detected_at, checked_flag, pct in whales:
+    for pool, wallet, net_usd, net_tokens, tx_count, taddr, is_new, age_tag, detected_at, checked_flag, pct in whales:
         new_badge = '<span class="badge new">BARU</span>' if is_new else '<span class="badge old">lama</span>'
         if checked_flag and pct is not None:
             color = "green" if pct >= 0 else "red"
@@ -86,6 +96,7 @@ def main():
           <td>{outcome}</td>
           <td class="mono">{short_wallet}</td>
           <td>{esc(detected_at)}</td>
+          <td>{addr_cell(taddr)}</td>
         </tr>"""
 
     wallet_rows = ""
@@ -130,6 +141,8 @@ def main():
   .badge.new {{ background: #1f6feb33; color: #58a6ff; }}
   .badge.old {{ background: #30363d; color: #8b949e; }}
   .scroll {{ overflow-x: auto; }}
+  .cp {{ background: #238636; color: #fff; border: 0; border-radius: 4px; padding: 3px 8px; font-size: 11px; cursor: pointer; }}
+  a {{ color: #58a6ff; }}
 </style>
 </head>
 <body>
@@ -146,8 +159,8 @@ def main():
   <h2>Watchlist Token (24 jam terakhir)</h2>
   <div class="scroll">
   <table>
-    <tr><th>Token</th><th>Likuiditas</th><th>Volume 24j</th><th>Harga 24j</th><th>Terdeteksi</th></tr>
-    {watch_rows if watch_rows else '<tr><td colspan="5">Belum ada data</td></tr>'}
+    <tr><th>Token</th><th>Likuiditas</th><th>Volume 24j</th><th>Harga 24j</th><th>Terdeteksi</th><th>Alamat Token</th></tr>
+    {watch_rows if watch_rows else '<tr><td colspan="6">Belum ada data</td></tr>'}
   </table>
   </div>
 
@@ -162,10 +175,18 @@ def main():
   <h2>Whale Move Terbaru (40 terakhir)</h2>
   <div class="scroll">
   <table>
-    <tr><th>Token</th><th>Nilai</th><th>Jenis</th><th>Umur Wallet</th><th>Hasil 24j</th><th>Wallet</th><th>Waktu</th></tr>
-    {whale_rows if whale_rows else '<tr><td colspan="7">Belum ada data</td></tr>'}
+    <tr><th>Token</th><th>Nilai</th><th>Jenis</th><th>Umur Wallet</th><th>Hasil 24j</th><th>Wallet</th><th>Waktu</th><th>Alamat Token</th></tr>
+    {whale_rows if whale_rows else '<tr><td colspan="8">Belum ada data</td></tr>'}
   </table>
   </div>
+<script>
+function cp(b) {{
+  var t = b.dataset.a;
+  var done = function() {{ b.textContent = "Tersalin"; setTimeout(function() {{ b.textContent = "Copy"; }}, 1500); }};
+  if (navigator.clipboard) {{ navigator.clipboard.writeText(t).then(done); }}
+  else {{ var x = document.createElement("textarea"); x.value = t; document.body.appendChild(x); x.select(); document.execCommand("copy"); document.body.removeChild(x); done(); }}
+}}
+</script>
 </body>
 </html>"""
 
