@@ -1,3 +1,4 @@
+import html
 import json
 import os
 import sqlite3
@@ -290,7 +291,7 @@ def send_telegram(config, text):
     if not token or not chat_id:
         print("Lewati notifikasi: TELEGRAM_BOT_TOKEN/CHAT_ID belum diset")
         return
-    payload = json.dumps({"chat_id": chat_id, "text": text}).encode()
+    payload = json.dumps({"chat_id": chat_id, "text": text, "parse_mode": "HTML", "disable_web_page_preview": True}).encode()
     req = urllib.request.Request(
         f"https://api.telegram.org/bot{token}/sendMessage",
         data=payload,
@@ -396,9 +397,11 @@ def main():
         for w in new_whales[:10]:
             tag = "BARU" if w["is_new_holder"] else "nambah"
             lines.append(
-                f"- {w['pool']} [{tag}, {w['wallet_age_tag']}]\n"
+                f"- {html.escape(w['pool'])} [{tag}, {w['wallet_age_tag']}]\n"
                 f"  ${w['net_usd']:,.0f} ({w['net_tokens']:,.2f} token, {w['tx_count']} tx)\n"
-                f"  wallet: {w['wallet'][:10]}...{w['wallet'][-6:]}"
+                f"  token: <code>{w['token_address']}</code>\n"
+                f"  wallet: <code>{w['wallet']}</code>\n"
+                f"  <a href=\"https://dexscreener.com/base/{w['token_address']}\">chart</a>"
             )
         send_telegram(config, "\n".join(lines))
 

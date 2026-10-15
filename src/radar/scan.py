@@ -1,3 +1,4 @@
+import html
 import json
 import os
 import sqlite3
@@ -114,7 +115,7 @@ def send_telegram(config, text):
     if not token or not chat_id:
         print("Lewati notifikasi: TELEGRAM_BOT_TOKEN/CHAT_ID belum diset")
         return
-    payload = json.dumps({"chat_id": chat_id, "text": text}).encode()
+    payload = json.dumps({"chat_id": chat_id, "text": text, "parse_mode": "HTML", "disable_web_page_preview": True}).encode()
     req = urllib.request.Request(
         f"https://api.telegram.org/bot{token}/sendMessage",
         data=payload,
@@ -168,12 +169,12 @@ def main():
         if decision == "LOLOS":
             passed += 1
             if address not in already_notified:
-                new_passes.append((address, name, liq, vol, c24))
+                new_passes.append((address, name, liq, vol, c24, token_address))
 
         print(f"[{decision}] {name}")
         print(f"    {'; '.join(reasons)}")
 
-    for address, name, liq, vol, c24 in new_passes:
+    for address, name, liq, vol, c24, _t in new_passes:
         con.execute(
             "INSERT OR IGNORE INTO notified_pools (pool_address, name,"
             " first_notified_at) VALUES (?,?,?)",
@@ -190,9 +191,11 @@ def main():
 
     if new_passes:
         lines = ["Machine 001 Radar: token baru lolos filter\n"]
-        for _, name, liq, vol, c24 in new_passes:
+        for _, name, liq, vol, c24, taddr in new_passes:
             lines.append(
-                f"- {name}\n  Likuiditas ${liq:,.0f} | Volume24j ${vol:,.0f} | 24j {c24:.1f}%"
+                f"- {html.escape(str(name))}\n  Likuiditas ${liq:,.0f} | Volume24j ${vol:,.0f} | 24j {c24:.1f}%\n"
+                f"  token: <code>{taddr}</code>\n"
+                f"  <a href=\"https://dexscreener.com/base/{taddr}\">chart</a>"
             )
         send_telegram(config, "\n".join(lines))
 
