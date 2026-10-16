@@ -5,6 +5,9 @@ DB_PATH = "data/radar.db"
 OUTPUT_PATH = "docs/index.html"
 
 
+from price_fmt import price_html
+
+
 def esc(s):
     if s is None:
         return ""
@@ -35,7 +38,7 @@ def main():
     whales = con.execute(
         """SELECT pool_label, wallet, net_usd, net_tokens, tx_count, token_address,
                   is_new_holder, wallet_age_tag, detected_at,
-                  price_checked_24h, price_change_24h_pct
+                  price_checked_24h, price_change_24h_pct, price_usd_at_detection
            FROM whale_moves
            ORDER BY detected_at DESC
            LIMIT 40"""
@@ -74,12 +77,13 @@ def main():
           <td>${liq:,.0f}</td>
           <td>${vol:,.0f}</td>
           <td class="{color}">{chg24:+.1f}%</td>
+          <td>{price_html(price)}</td>
           <td>{esc(seen_at)}</td>
           <td>{addr_cell(ta)}</td>
         </tr>"""
 
     whale_rows = ""
-    for pool, wallet, net_usd, net_tokens, tx_count, taddr, is_new, age_tag, detected_at, checked_flag, pct in whales:
+    for pool, wallet, net_usd, net_tokens, tx_count, taddr, is_new, age_tag, detected_at, checked_flag, pct, p_usd in whales:
         new_badge = '<span class="badge new">BARU</span>' if is_new else '<span class="badge old">lama</span>'
         if checked_flag and pct is not None:
             color = "green" if pct >= 0 else "red"
@@ -95,6 +99,7 @@ def main():
           <td>{esc(age_tag)}</td>
           <td>{outcome}</td>
           <td class="mono">{short_wallet}</td>
+          <td>{price_html(p_usd)}</td>
           <td>{esc(detected_at)}</td>
           <td>{addr_cell(taddr)}</td>
         </tr>"""
@@ -159,8 +164,8 @@ def main():
   <h2>Watchlist Token (24 jam terakhir)</h2>
   <div class="scroll">
   <table>
-    <tr><th>Token</th><th>Likuiditas</th><th>Volume 24j</th><th>Harga 24j</th><th>Terdeteksi</th><th>Alamat Token</th></tr>
-    {watch_rows if watch_rows else '<tr><td colspan="6">Belum ada data</td></tr>'}
+    <tr><th>Token</th><th>Likuiditas</th><th>Volume 24j</th><th>Harga 24j</th><th>Harga saat terdeteksi</th><th>Terdeteksi</th><th>Alamat Token</th></tr>
+    {watch_rows if watch_rows else '<tr><td colspan="7">Belum ada data</td></tr>'}
   </table>
   </div>
 
@@ -175,8 +180,8 @@ def main():
   <h2>Whale Move Terbaru (40 terakhir)</h2>
   <div class="scroll">
   <table>
-    <tr><th>Token</th><th>Nilai</th><th>Jenis</th><th>Umur Wallet</th><th>Hasil 24j</th><th>Wallet</th><th>Waktu</th><th>Alamat Token</th></tr>
-    {whale_rows if whale_rows else '<tr><td colspan="8">Belum ada data</td></tr>'}
+    <tr><th>Token</th><th>Nilai</th><th>Jenis</th><th>Umur Wallet</th><th>Hasil 24j</th><th>Wallet</th><th>Harga saat terdeteksi</th><th>Waktu</th><th>Alamat Token</th></tr>
+    {whale_rows if whale_rows else '<tr><td colspan="9">Belum ada data</td></tr>'}
   </table>
   </div>
 <script>

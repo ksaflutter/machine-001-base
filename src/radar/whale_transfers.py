@@ -1,4 +1,5 @@
 import html
+from price_fmt import price_line
 from token_safety import safety_line
 import json
 import os
@@ -400,6 +401,7 @@ def main():
             lines.append(
                 f"- {html.escape(w['pool'])} [{tag}, {w['wallet_age_tag']}]\n"
                 f"  ${w['net_usd']:,.0f} ({w['net_tokens']:,.2f} token, {w['tx_count']} tx)\n"
+                f"  {price_line(w['token_address'])}\n"
                 f"  token: <code>{w['token_address']}</code>\n"
                 f"  {safety_line(w['token_address'])}\n"
                 f"  wallet: <code>{w['wallet']}</code>\n"

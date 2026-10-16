@@ -1,4 +1,5 @@
 import html
+from price_fmt import price_line
 from token_safety import safety_line
 import json
 import os
@@ -195,6 +196,7 @@ def main():
         for _, name, liq, vol, c24, taddr in new_passes:
             lines.append(
                 f"- {html.escape(str(name))}\n  Likuiditas ${liq:,.0f} | Volume24j ${vol:,.0f} | 24j {c24:.1f}%\n"
+                f"  {price_line(taddr)}\n"
                 f"  token: <code>{taddr}</code>\n"
                 f"  {safety_line(taddr)}\n"
                 f"  <a href=\"https://dexscreener.com/base/{taddr}\">chart</a>"
