@@ -214,6 +214,16 @@ def classify_wallet_age(age_days):
     return "wallet lama"
 
 
+IGNORED_ADDRESSES = {
+    "0xdead000000000000000042069420694206942069",
+}
+
+
+def is_ignored_address(a):
+    a = (a or "").lower()
+    return a in IGNORED_ADDRESSES or a.startswith("0x" + "0" * 30)
+
+
 def analyze_token(url, token_address, pool_label, price_usd, from_block, from_block_int):
     transfers = fetch_all_transfers(url, token_address, from_block)
     if not transfers:
@@ -227,11 +237,11 @@ def analyze_token(url, token_address, pool_label, price_usd, from_block, from_bl
         value = t.get("value") or 0
         frm, to = t.get("from"), t.get("to")
         ts = (t.get("metadata") or {}).get("blockTimestamp", "?")
-        if frm:
+        if frm and not is_ignored_address(frm):
             net_flow[frm] -= value
             last_seen[frm] = ts
             tx_count[frm] += 1
-        if to:
+        if to and not is_ignored_address(to):
             net_flow[to] += value
             last_seen[to] = ts
             tx_count[to] += 1
