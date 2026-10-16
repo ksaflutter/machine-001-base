@@ -1,4 +1,5 @@
 import html
+from token_safety import safety_line
 import json
 import os
 import sqlite3
@@ -195,6 +196,7 @@ def main():
             lines.append(
                 f"- {html.escape(str(name))}\n  Likuiditas ${liq:,.0f} | Volume24j ${vol:,.0f} | 24j {c24:.1f}%\n"
                 f"  token: <code>{taddr}</code>\n"
+                f"  {safety_line(taddr)}\n"
                 f"  <a href=\"https://dexscreener.com/base/{taddr}\">chart</a>"
             )
         send_telegram(config, "\n".join(lines))

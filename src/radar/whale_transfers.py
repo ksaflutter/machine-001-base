@@ -1,4 +1,5 @@
 import html
+from token_safety import safety_line
 import json
 import os
 import sqlite3
@@ -400,6 +401,7 @@ def main():
                 f"- {html.escape(w['pool'])} [{tag}, {w['wallet_age_tag']}]\n"
                 f"  ${w['net_usd']:,.0f} ({w['net_tokens']:,.2f} token, {w['tx_count']} tx)\n"
                 f"  token: <code>{w['token_address']}</code>\n"
+                f"  {safety_line(w['token_address'])}\n"
                 f"  wallet: <code>{w['wallet']}</code>\n"
                 f"  <a href=\"https://dexscreener.com/base/{w['token_address']}\">chart</a>"
             )
