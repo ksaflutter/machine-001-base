@@ -39,7 +39,7 @@ def load_universe(con):
         """SELECT token_address, MAX(pool_label), detected_at,
                   COUNT(DISTINCT CASE WHEN is_new_holder = 1 THEN wallet END)
            FROM whale_moves
-           WHERE token_address IS NOT NULL AND detected_at IS NOT NULL
+           WHERE token_address IS NOT NULL AND detected_at IS NOT NULL AND detected_at >= '2026-10-11' AND wallet NOT LIKE '0x0000000000000000%'
            GROUP BY token_address, detected_at"""
     ).fetchall()
 

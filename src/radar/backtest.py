@@ -33,7 +33,7 @@ def load_events(con):
         """SELECT id, token_address, pool_label, wallet, net_usd,
                   wallet_age_tag, detected_at
            FROM whale_moves
-           WHERE token_address IS NOT NULL AND detected_at IS NOT NULL
+           WHERE token_address IS NOT NULL AND detected_at IS NOT NULL AND detected_at >= '2026-10-11' AND wallet NOT LIKE '0x0000000000000000%'
            ORDER BY detected_at ASC"""
     ).fetchall()
     seen = set()
